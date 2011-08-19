@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<title>Ohana One Year Old Growth Progress</title>
+	<script src="jquery.js" type="text/javascript"></script>
+	<script src="jquery.imageLens.js" type="text/javascript"></script>
+	<script type="text/javascript" language="javascript">
+
+	//Disable right click script
+	//visit http://www.rainbow.arch.scriptmania.com/scripts/
+	var message="Sorry, right-click has been disabled";
+	///////////////////////////////////
+	function clickIE() {if (document.all) {(message);return false;}}
+	function clickNS(e) {if
+	(document.layers||(document.getElementById&&!document.all)) {
+	if (e.which==2||e.which==3) {(message);return false;}}}
+	if (document.layers)
+	{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+	else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+	document.oncontextmenu=new Function("return false")
+
+		$(function () {
+			$("#img_02").imageLens({ lensSize: 300 });
+			$("#img_03").imageLens({ lensSize: 200 });
+		});
+
+		var textArr = ["Taller", "Stronger", "Naughtier"];
+		var cnt = 0;
+		var ocnt = 0;
+		var margin = 50;
+		var wordspace = (1920-margin-200)/(textArr.length-1);
+		var oArr = ["O", "h", "a", "n", "a"];
+
+
+		function Load()
+		{
+			drawBackground();
+			drawTextLoop();
+		}
+
+		function drawBackground()
+		{
+			var can = document.getElementById('canvas1');
+			var context = can.getContext('2d');
+			var my_gradient = context.createLinearGradient(0, 0, 0, 60);
+			my_gradient.addColorStop(0, "green");
+			my_gradient.addColorStop(1, "white");
+			context.clearRect(0, 0, 1920, 60);
+			context.fillStyle = my_gradient;
+			context.fillRect(0, 0, 1920, 60);
+		}
+
+		function getTextBox()
+		{
+			var can = document.getElementById('canvas1');
+			var ctx = can.getContext('2d');
+
+			ctx.shadowOffsetX = 2;
+			ctx.shadowOffsetY = 2;
+			ctx.shadowBlur = 2;
+			ctx.shadowColor = "rgba(0, 0, 0, 1)";
+
+			ctx.font = "30px HW";
+			ctx.fillStyle = "lightblue";
+			return ctx;
+		}
+
+		function drawText(texttodraw, x)
+		{
+			var ctx = getTextBox();
+			ctx.fillText(texttodraw, x, 30);
+		}
+
+		function drawOhana()
+		{
+			drawBackground();
+			drawOhanaLoop();
+		}
+
+		function drawOhanaLoop()
+		{
+			var ctx = getTextBox();
+			drawOhanaText(ocnt);
+			ocnt++;
+			if (ocnt >= oArr.length)
+			{
+				ocnt = 0;
+				setTimeout(function(){Load();} , 2000);
+			}
+			else
+				setTimeout(function () {drawOhanaLoop();}, 400);
+
+		}
+
+		function drawOhanaText(index)
+		{
+			drawText(oArr[index], 866+index*30);
+		}
+
+		function drawTextLoop()
+		{
+			drawText(textArr[cnt], wordspace*(cnt)+margin);
+			var fntoCall;
+			if (cnt == textArr.length-1)
+			{
+				fntoCall= function () {
+					drawOhana();
+				}
+			}
+			else
+			{
+				fntoCall= function () {
+					drawTextLoop();
+				}
+			}
+			setCnt();
+			setTimeout(fntoCall , 2000
+			);
+		}
+
+
+
+	function setCnt()
+	{
+	 cnt = (cnt == textArr.length-1) ? 0 : cnt+1;
+	}
+	</script>
+	<STYLE type="text/css">
+	  @font-face {
+	    font-family: HW;
+	    src: local("Axure Handwriting"), url("kelseys_script.ttf") format("truetype");
+	  }
+
+	  header {
+	  	font-family:HW, verdana, helvetica, sans-serif;
+	  	font-size:25px;
+	  	color:Blue;
+	  	padding-left: 50px;
+	  	background: -webkit-gradient(linear, left top, left bottom, from(rgba(49,237,134, 1)), to(rgba(231,253,236, 1)));
+	  	border-radius: 18px;
+	  	text-shadow:  rgba(5, 5, 5, 0.75) 5px 5px 5px;
+	  	height:30px;
+	  	text-align: justify;
+	  	}
+
+	  	html {
+
+		        overflow: hidden;
+				cursor: url(ohanahead.png), default;
+
+		}
+
+	</STYLE>
+
+</head>
+<body onload="Load();">
+<canvas id="canvas1" height="60" width="1900"></canvas>
+<header>Find the picture where the cursor face is from</header>
+<div  align="center" style="z-index:-1;position:absolute;left:0px;top:50px;">
+
+<br/>
+
+					<img  id="img_02" src="1YearOldMeasurement.jpg" width="1860" height="990" hspace="10"/>
+					<!--<img id="img_02" src="1YearOldMeasurement.jpg" width="529" height="585" />
+					<img id="img_03" src="Sample01.jpg" width="480" height="360" />-->
+
+</div>
+
+
+</body>
+</html>
